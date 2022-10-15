@@ -13,6 +13,15 @@ export default defineConfig(({ mode }) => {
       port: 3000,
     },
     build: {
+      rollupOptions: {
+        external: [/ngResource/],
+        onwarn: (warning, warn) => {
+          if (warning.message.includes('ngResource')) {
+            return;
+          }
+          warn(warning);
+          },
+      },
       outDir: `${offsetFromRoot('apps/my-app/src')}/dist/apps/my-app`,
       emptyOutDir: true,
       target: 'es2020',
